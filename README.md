@@ -14,7 +14,7 @@ function easeOutCubic(t, b, c, d) {
     t /= d;
     t--;
     return -c * (t * t * t * t - 1) + b;
-  };
+ };
 ```
 
 On line 55 you can put a function to close your navigation
