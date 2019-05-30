@@ -1,14 +1,14 @@
 # smooth-scrolling
 Smooth scrolling for webpages with javascript.
 
-Make sure to define at how many pixels your navigation flips on line 8 and the height of your different navigations
+Make sure to define at how many pixels your navigation flips on line 8 and the height of your different navigations.
 ```javascript
 const breakPoint = 798;
 const desktopNavHeight = 69;
 const mobileNavHeight = 49;
 ```
 
-You can change the timing function on line 49, default is ease-out-cubic
+You can change the timing function on line 49, default is ease-out-cubic.
 ```javascript
 function easeOutCubic(t, b, c, d) {
     t /= d;
@@ -17,7 +17,7 @@ function easeOutCubic(t, b, c, d) {
  };
 ```
 
-On line 55 you can put a function to close your navigation
+On line 55 you can put a function to close your navigation.
 ```javascript
 // put close navigation function here
 // for example: closeNav(mobileNavBtn);
