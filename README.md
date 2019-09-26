@@ -17,7 +17,7 @@ function easeOutCubic(t, b, c, d) {
  };
 ```
 
-On line 55 you can put a function to close your navigation.
+On line 55 you can put a function to close your navigation when a link in the mobile navigation is clicked.
 ```javascript
 // put close navigation function here
 // for example: closeNav(mobileNavBtn);
