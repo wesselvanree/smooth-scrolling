@@ -1,7 +1,7 @@
 # smooth-scrolling
 Smooth scrolling for webpages with javascript.
 
-Make sure to define at how many pixels your navigation flips on line 8 and the height of your different navigations.
+Make sure to define at how many pixels your navigation flips on line 8 and the height of your different navigations. The height of the navigation is used for calculating the amount of pixels that need to be scrolled.
 ```javascript
 const breakPoint = 798;
 const desktopNavHeight = 69;
