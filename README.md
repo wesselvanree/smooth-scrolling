@@ -1,4 +1,4 @@
-# smooth-scrolling
+# smoothScroll.js
 
 Smooth scrolling for webpages with javascript.
 To start using this script, add this script at the end of the body tag.
