@@ -8,7 +8,7 @@ body {
   color: #454545;
   padding: 0;
   margin: 0;
-  background-color: #fafaf8;
+  background-color: #f8f8fa;
   line-height: 1.5em;
 }
 
@@ -22,6 +22,7 @@ p {
 
 a {
   text-decoration: none;
+  color: blue;
 }
 
 .scroll {
@@ -77,9 +78,30 @@ main {
   margin-left: 0;
 }
 
+footer {
+  width: 100%;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 @media screen and (min-width: 900px) {
   h1.first-heading {
     margin-top: 10px;
+  }
+  .scroll {
+    padding: 4px 10px;
+    border-radius: 4px;
+    -webkit-transition: background-color 200ms ease-out;
+    transition: background-color 200ms ease-out;
+    line-height: 1.5em;
+  }
+  .scroll:hover {
+    background-color: #ebebf0;
   }
   .navigation {
     left: initial;
@@ -91,11 +113,14 @@ main {
         -ms-flex-direction: column;
             flex-direction: column;
     height: initial;
-    width: 200px;
+    width: 140px;
     padding: 0 20px 10px 20px;
     -webkit-box-align: start;
         -ms-flex-align: start;
             align-items: flex-start;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    background-color: initial;
   }
   .navigation .scroll {
     margin: 0;
@@ -104,6 +129,9 @@ main {
   }
   .top {
     right: initial;
+    background-color: initial;
+    -webkit-box-shadow: none;
+            box-shadow: none;
     left: 50%;
     -webkit-transform: translateX(320px);
             transform: translateX(320px);

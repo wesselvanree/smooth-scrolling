@@ -8,7 +8,7 @@ body {
   color: #454545;
   padding: 0;
   margin: 0;
-  background-color: #fafaf8;
+  background-color: #f8f8fa;
   line-height: 1.5em;
 }
 
@@ -22,6 +22,7 @@ p {
 
 a {
   text-decoration: none;
+  color: blue;
 }
 
 .scroll {
@@ -69,9 +70,27 @@ main {
   }
 }
 
+footer {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (min-width: 900px) {
   h1.first-heading {
     margin-top: 10px;
+  }
+
+  .scroll {
+    padding: 4px 10px;
+    border-radius: 4px;
+    transition: background-color 200ms ease-out;
+    line-height: 1.5em;
+  }
+
+  .scroll:hover {
+    background-color: #ebebf0;
   }
 
   .navigation {
@@ -80,9 +99,11 @@ main {
     transform: translateX(-320px);
     flex-direction: column;
     height: initial;
-    width: 200px;
+    width: 140px;
     padding: 0 20px 10px 20px;
     align-items: flex-start;
+    box-shadow: none;
+    background-color: initial;
 
     .scroll {
       margin: 0;
@@ -93,6 +114,8 @@ main {
 
   .top {
     right: initial;
+    background-color: initial;
+    box-shadow: none;
     left: 50%;
     transform: translateX(320px);
   }
