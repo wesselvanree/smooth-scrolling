@@ -7,6 +7,8 @@ First, set the breakpoint in pixels for mobile navigation to desktop navigation.
 Also set how many pixels you want to add to the top.
 After that, you need to set the animation duration.
 
+Make sure to define at how many pixels your navigation flips on line 8 and the height of your different navigations. The height of the navigation is used for calculating the amount of pixels that need to be scrolled.
+
 ```javascript
 // define breakpoint for mobile navigation to desktop navigation
 const breakPoint = 798;
