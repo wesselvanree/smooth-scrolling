@@ -36,7 +36,6 @@ a {
 
 main {
   padding: 20px;
-  padding-bottom: 300px;
   max-width: 600px;
   margin: auto;
 }
@@ -75,6 +74,7 @@ footer {
   padding: 10px;
   display: flex;
   justify-content: center;
+  margin-top: 70px;
 }
 
 @media screen and (min-width: 900px) {
