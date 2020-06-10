@@ -1,6 +1,6 @@
 # Smooth scrolling for webpages <!-- omit in toc -->
 
-## Tabel of contents <!-- omit in toc -->
+## Table of contents <!-- omit in toc -->
 - [Description](#description)
 - [How to use](#how-to-use)
   - [Configuration](#configuration)
@@ -12,7 +12,7 @@
 
 ## Description
 
-Smooth scrolling for links that refer to an element on the same page. You can add extra space between the top of the window and the target element. You can add one of two different values on from the top of the window depending on the given breakpoint.
+Smooth scrolling for links that refer to an element on the same page using `window.requestAnimationFrame`. You can add extra space between the top of the window and the target element. You can add one of two different values on from the top of the window depending on the given breakpoint.
 
 <br />
 
@@ -36,7 +36,7 @@ const smoothScrollSettings = {
 
 `distanceFromTopDesktop` and `distanceFromTopMobile` are the amount of pixels added between the target element and the top of the window.
 
-Change `animationDuration` to scroll faster or slower.
+Change `animationDuration` to animate faster or slower.
 
 ### Start smooth scrolling
 Add the `"js-scroll"` class and add the `href` attribute to a tag. For example:
