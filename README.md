@@ -2,7 +2,7 @@
 
 <br />
 
-## Table of Contents <!-- omit in toc -->
+### Table of Contents <!-- omit in toc -->
 
 - [Description](#description)
 - [How To Use](#how-to-use)
