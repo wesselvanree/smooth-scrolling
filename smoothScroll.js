@@ -1,19 +1,15 @@
+const smoothScrollSettings = {
+  navigationBreakpoint: 798,
+  distanceFromTopDesktop: 20,
+  distanceFromTopMobile: 95,
+  animationDuration: 800,
+};
+
 // setting event listeners for smooth scrolling
 smoothScrollLinks = document.querySelectorAll(".js-scroll");
 smoothScrollLinks.forEach(function (smoothScrollLink) {
   smoothScrollLink.addEventListener("click", smoothScroll);
 });
-
-// define breakpoint for mobile navigation to desktop navigation
-const breakPoint = 798;
-const spaceFromTopWindow = {
-  desktop: 20,
-  mobile: 95,
-};
-
-smoothScrollSettings = {
-  duration: 800,
-};
 
 // function for smooth scrolling
 function smoothScroll(event) {
@@ -28,12 +24,11 @@ function smoothScroll(event) {
 
   // calculate how many px will need to be scrolled less because of the navigation bar
   navigationHeight = 0;
-  if (screenWidth > breakPoint) {
-    navigationHeight = spaceFromTopWindow["desktop"];
+  if (screenWidth > smoothScrollSettings.navigationBreakpoint) {
+    navigationHeight = smoothScrollSettings.distanceFromTopDesktop;
   } else {
-    navigationHeight = spaceFromTopWindow["mobile"];
+    navigationHeight = smoothScrollSettings.distanceFromTopMobile;
   }
-  console.log("navigation height: " + navigationHeight);
 
   // if targetQuerySelector = "#" --> scroll to top
   const targetPosition =
@@ -47,9 +42,6 @@ function smoothScroll(event) {
   const duration = 800;
   let start = null;
 
-  console.log("from: " + window.pageYOffset + ", to: " + targetPosition);
-  console.log("duration: " + duration);
-
   // animation
   window.requestAnimationFrame(step);
 
@@ -62,7 +54,7 @@ function smoothScroll(event) {
         progress,
         startPosition,
         distance,
-        smoothScrollSettings["duration"]
+        smoothScrollSettings.animationDuration
       )
     );
     if (progress < duration) {

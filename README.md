@@ -1,4 +1,12 @@
-# smoothScroll.js
+# Smooth scrolling for webpages <!-- omit in toc -->
+
+## Tabel of contents <!-- omit in toc -->
+- [Description](#description)
+- [How to use](#how-to-use)
+  - [Configuration](#configuration)
+  - [Start smooth scrolling](#start-smooth-scrolling)
+  - [Changing timing function](#changing-timing-function)
+  - [Closing mobile navigation menu](#closing-mobile-navigation-menu)
 
 <br />
 
@@ -10,28 +18,25 @@ Smooth scrolling for links that refer to an element on the same page.
 
 ## How to use
 
-To start using this script, first download the smoothScroll.js file or copy the code in your own file js file.
+To start using this script, first download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/smooth-scrolling/master/smoothScroll.js) file or copy the code in your own file js file.
 
 ### Configuration
 
-First, set the breakpoint in pixels for mobile navigation to desktop navigation.
-Also set how many pixels you want to add to the top.
-After that, you need to set the animation duration.
+You can change the settings on line 1:
 
-The integers added in `spaceFromTopWindow` are the amount of pixels added to the top of the screen.
-
-```javascript
-// define breakpoint for mobile navigation to desktop navigation
-const breakPoint = 798;
-const spaceFromTopWindow = {
-  desktop: 20,
-  mobile: 95,
-};
-
-smoothScrollSettings = {
-  duration: 800,
+```js
+const smoothScrollSettings = {
+  navigationBreakpoint: 798,
+  distanceFromTopDesktop: 20,
+  distanceFromTopMobile: 95,
+  animationDuration: 800,
 };
 ```
+`navigationBreakPoint` is the amount of pixels where the height of the navigation changes.
+
+`distanceFromTopDesktop` and `distanceFromTopMobile` are the amount of pixels added between the target element and the top of the window.
+
+Change `animationDuration` to scroll faster or slower.
 
 ### Start smooth scrolling
 Add the `"js-scroll"` class and add the `href` attribute to a tag. For example:
@@ -44,7 +49,7 @@ It also works with classes in the href attribute.
 <a class="js-scroll" href=".heading">Heading</a>
 ```
 
-### Timing function
+### Changing timing function
 
 You can change the timing function on line 74, the default function is easeOutCubic.
 
