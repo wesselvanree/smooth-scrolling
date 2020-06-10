@@ -4,15 +4,11 @@
 
 ## Description
 
----
-
 Smooth scrolling for links that refer to an element on the same page.
 
 <br />
 
 ## How to use
-
----
 
 To start using this script, first download the smoothScroll.js file or copy the code in your own file js file.
 
@@ -37,8 +33,8 @@ smoothScrollSettings = {
 };
 ```
 
-### Start using
-Then, add the `"js-scroll"` class and add the `href` attribute to a tag. For example:
+### Start smooth scrolling
+Add the `"js-scroll"` class and add the `href` attribute to a tag. For example:
 
 ```html
 <a class="js-scroll" href="#heading">Heading</a>
