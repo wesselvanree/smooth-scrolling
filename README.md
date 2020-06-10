@@ -1,13 +1,28 @@
 # smoothScroll.js
 
-Smooth scrolling for webpages with javascript.
-To start using this script, add this script at the end of the body tag.
+<br />
+
+## Description
+
+---
+
+Smooth scrolling for links that refer to an element on the same page.
+
+<br />
+
+## How to use
+
+---
+
+To start using this script, first download the smoothScroll.js file or copy the code in your own file js file.
+
+### Configuration
 
 First, set the breakpoint in pixels for mobile navigation to desktop navigation.
 Also set how many pixels you want to add to the top.
 After that, you need to set the animation duration.
 
-Make sure to define at how many pixels your navigation flips on line 8 and the height of your different navigations. The height of the navigation is used for calculating the amount of pixels that need to be scrolled.
+The integers added in `spaceFromTopWindow` are the amount of pixels added to the top of the screen.
 
 ```javascript
 // define breakpoint for mobile navigation to desktop navigation
@@ -22,11 +37,18 @@ smoothScrollSettings = {
 };
 ```
 
-Then, add the "scroll" class and add the href attribute to a tag. For example:
+### Start using
+Then, add the `"js-scroll"` class and add the `href` attribute to a tag. For example:
 
 ```html
-<a class="scroll" href="#heading">Heading</a>
+<a class="js-scroll" href="#heading">Heading</a>
 ```
+It also works with classes in the href attribute.
+```html
+<a class="js-scroll" href=".heading">Heading</a>
+```
+
+### Timing function
 
 You can change the timing function on line 74, the default function is easeOutCubic.
 
@@ -38,8 +60,8 @@ function timingFunction(t, b, c, d) {
 }
 ```
 
+### Closing mobile navigation menu
 On line 81, you can put a function to close your navigation.
-For example a mobile dropdown navigation.
 
 ```javascript
 // put close navigation function here

@@ -1,5 +1,5 @@
 // setting event listeners for smooth scrolling
-smoothScrollLinks = document.querySelectorAll(".scroll");
+smoothScrollLinks = document.querySelectorAll(".js-scroll");
 smoothScrollLinks.forEach(function (smoothScrollLink) {
   smoothScrollLink.addEventListener("click", smoothScroll);
 });
