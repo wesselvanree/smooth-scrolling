@@ -12,7 +12,7 @@
 
 ## Description
 
-Smooth scrolling for links that refer to an element on the same page.
+Smooth scrolling for links that refer to an element on the same page. You can add extra space between the top of the window and the target element. You can add one of two different values on from the top of the window depending on the given breakpoint.
 
 <br />
 
