@@ -1,5 +1,7 @@
 # Smooth scrolling for webpages <!-- omit in toc -->
 
+<br />
+
 ## Table of contents <!-- omit in toc -->
 - [Description](#description)
 - [How to use](#how-to-use)
