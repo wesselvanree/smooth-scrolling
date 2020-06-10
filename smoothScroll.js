@@ -71,5 +71,5 @@ function smoothScroll(event) {
   }
 
   // put close navigation function here
-  // for example: toggleMobileNavigation();
+  // e.g. toggleMobileNavigation();
 }
