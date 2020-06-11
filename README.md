@@ -42,7 +42,7 @@ Change `animationDuration` to animate faster or slower.
 
 ### Start Smooth Scrolling
 
-Add the `"js-scroll"` class and add the `href` attribute to a tag. For example:
+Add the `"js-scroll"` class to an element, also add the `href` attribute and set the target element. For example:
 
 ```html
 <a class="js-scroll" href="#heading">Heading</a>
