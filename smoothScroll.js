@@ -16,7 +16,7 @@ function smoothScroll(event) {
   event.preventDefault();
   const targetQuerySelector = event.currentTarget.getAttribute("href");
 
-  // the targetPosition depends on the screen size because of my different topnavs
+  // the targetPosition in pixels depends on the screen width
   const screenWidth =
     window.innerWidth ||
     document.documentElement.clientWidth ||
