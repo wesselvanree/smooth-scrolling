@@ -39,7 +39,7 @@ function smoothScroll(event) {
 
   const startPosition = window.pageYOffset;
   let distance = targetPosition - startPosition;
-  const duration = 800;
+  const duration = smoothScrollSettings.animationDuration;
   let start = null;
 
   // animation
