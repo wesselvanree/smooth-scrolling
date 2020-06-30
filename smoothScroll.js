@@ -11,19 +11,17 @@ smoothScrollLinks.forEach(function (smoothScrollLink) {
   smoothScrollLink.addEventListener("click", smoothScroll);
 });
 
-// function for smooth scrolling
 function smoothScroll(event) {
   event.preventDefault();
   const targetQuerySelector = event.currentTarget.getAttribute("href");
 
-  // the targetPosition in pixels depends on the screen width
+  // the targetPosition depends on the screen width
   const screenWidth =
     window.innerWidth ||
     document.documentElement.clientWidth ||
     document.getElementsByTagName("body")[0].clientWidth;
 
-  // calculate how many px will need to be scrolled less because of the navigation bar
-  navigationHeight = 0;
+  // calculate how many px will need to be scrolled
   if (screenWidth > smoothScrollSettings.navigationBreakpoint) {
     navigationHeight = smoothScrollSettings.distanceFromTopDesktop;
   } else {
@@ -45,20 +43,35 @@ function smoothScroll(event) {
   // animation
   window.requestAnimationFrame(step);
 
+  // abort scrolling when user scrolls
+  let previousPosition = null;
+  let abortAnimation = false;
+
   function step(timestamp) {
-    if (!start) start = timestamp;
-    const progress = timestamp - start;
-    window.scrollTo(
-      0,
-      timingFunction(
+    if (!start) {
+      start = timestamp;
+      previousPosition = window.pageYOffset;
+    }
+    if (previousPosition && parseInt(previousPosition) != window.pageYOffset) {
+      abortAnimation = true;
+    }
+
+    // if user didn't scroll during the animation
+    if (!abortAnimation) {
+      const progress = timestamp - start;
+      const newPos = timingFunction(
         progress,
         startPosition,
         distance,
         smoothScrollSettings.animationDuration
-      )
-    );
-    if (progress < duration) {
-      window.requestAnimationFrame(step);
+      );
+      window.scrollTo(0, newPos);
+      if (progress < duration) {
+        previousPosition = newPos;
+        window.requestAnimationFrame(step);
+      } else {
+        previousPosition = null;
+      }
     }
   }
 

@@ -34,9 +34,12 @@ const smoothScrollSettings = {
 };
 ```
 
-`navigationBreakPoint` is the amount of pixels where the height of the navigation changes.
+`navigationBreakPoint` is the width in pixels where the height of your navigation changes.
 
 `distanceFromTopDesktop` and `distanceFromTopMobile` are the amount of pixels added between the target element and the top of the window.
+
+The targetPosition depends on the screen width. Wider than `navigationBreakpoint` subtracts `distanceFromTopDesktop`.
+Less than `navigationBreakpoint` will subtract `distanceFromTopMobile` px from the target element offset.
 
 Change `animationDuration` to animate faster or slower.
 
@@ -56,7 +59,7 @@ It also works with classes in the href attribute.
 
 ### Change Timing Function
 
-You can change the timing function on line 66, the default function is easeOutCubic.
+You can change the timing function on line 79, the default function is easeOutCubic.
 
 ```javascript
 function timingFunction(t, b, c, d) {
@@ -68,4 +71,4 @@ function timingFunction(t, b, c, d) {
 
 ### Closing Mobile Navigation Menu
 
-On line 73, you can put a function to close your navigation.
+On line 86, you can put a function to close your navigation.
