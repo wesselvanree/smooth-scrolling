@@ -1,9 +1,11 @@
 const smoothScrollSettings = {
+  easingFunction: easeOutCubic,
+  animationDuration: 600,
+  changeUrl: false,
   navigationBreakpoint: 798,
   distanceFromTopDesktop: 20,
   distanceFromTopMobile: 95,
-  animationDuration: 800,
-  changeUrl: false,
+  // closeMenu: closeMenu,
 };
 
 // setting event listeners for anchor tags with # in the href attribute
@@ -47,6 +49,7 @@ function smoothScroll(event) {
     document.getElementsByTagName("body")[0].clientWidth;
 
   // calculate how many px will need to be scrolled
+  let distanceFromTop;
   if (screenWidth > smoothScrollSettings.navigationBreakpoint) {
     distanceFromTop = smoothScrollSettings.distanceFromTopDesktop;
   } else {
@@ -81,13 +84,13 @@ function smoothScroll(event) {
 
     // if user didn't scroll
     if (!abortAnimation) {
+      // calculating next position
       const progress = timestamp - start;
-      const newPos = timingFunction(
-        progress,
-        startPosition,
-        distance,
-        smoothScrollSettings.animationDuration
-      );
+      const t = progress / smoothScrollSettings.animationDuration;
+      const newPos =
+        startPosition + distance * smoothScrollSettings.easingFunction(t);
+
+      // scrolling and checking if animation should end
       window.scrollTo(0, newPos);
       if (progress < duration) {
         previousPosition = newPos;
@@ -98,14 +101,27 @@ function smoothScroll(event) {
     }
   }
 
-  // timing function
-  function timingFunction(t, b, c, d) {
-    // easeOutCubic
-    t /= d;
-    t--;
-    return -c * (t * t * t * t - 1) + b;
+  if (smoothScrollSettings.closeMenu) {
+    smoothScrollSettings.closeMenu();
   }
-
-  // put close navigation function here
-  // e.g. toggleMobileNavigation();
 }
+
+function linear(t) {
+  return t;
+}
+
+function easeOutCubic(t) {
+  return --t * t * t + 1;
+}
+
+function easeInCubic(t) {
+  return t * t * t;
+}
+
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+}
+
+// function closeMenu() {
+//   console.log("closing menu...");
+// }

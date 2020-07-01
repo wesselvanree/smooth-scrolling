@@ -21,3 +21,5 @@ To start using this script, first download the [smoothScroll.js](https://raw.git
 ### Configuration
 
 TODO: update README.md
+
+For more easing functions, take a look at  [easings.net](https://easings.net/). When you have chosen which one you want, I recommend looking at the javascript function [here](https://gist.github.com/gre/1650294).
