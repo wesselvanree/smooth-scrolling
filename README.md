@@ -5,9 +5,6 @@
 - [Description](#description)
 - [How To Use](#how-to-use)
   - [Configuration](#configuration)
-  - [Start Smooth Scrolling](#start-smooth-scrolling)
-  - [Change Timing Function](#change-timing-function)
-  - [Closing Mobile Navigation Menu](#closing-mobile-navigation-menu)
 
 <br />
 
@@ -23,52 +20,4 @@ To start using this script, first download the [smoothScroll.js](https://raw.git
 
 ### Configuration
 
-You can change the settings on line 1:
-
-```js
-const smoothScrollSettings = {
-  navigationBreakpoint: 798,
-  distanceFromTopDesktop: 20,
-  distanceFromTopMobile: 95,
-  animationDuration: 800,
-};
-```
-
-`navigationBreakPoint` is the width in pixels where the height of your navigation changes.
-
-`distanceFromTopDesktop` and `distanceFromTopMobile` are the amount of pixels added between the target element and the top of the window.
-
-The targetPosition depends on the screen width. Wider than `navigationBreakpoint` subtracts `distanceFromTopDesktop`.
-Less than `navigationBreakpoint` will subtract `distanceFromTopMobile` px from the target element offset.
-
-Change `animationDuration` to animate faster or slower.
-
-### Start Smooth Scrolling
-
-Add the `"js-scroll"` class to an element, also add the `href` attribute and set the target element. For example:
-
-```html
-<a class="js-scroll" href="#heading">Heading</a>
-```
-
-It also works with classes in the href attribute.
-
-```html
-<a class="js-scroll" href=".heading">Heading</a>
-```
-
-### Change Timing Function
-
-You can change the timing function on line 79, the default function is easeOutCubic.
-
-```javascript
-function timingFunction(t, b, c, d) {
-  t /= d;
-  t--;
-  return -c * (t * t * t * t - 1) + b;
-}
-```
-
-### Closing Mobile Navigation Menu
-
-On line 86, you can put a function to close your navigation.
+TODO: update README.md

@@ -3,17 +3,42 @@ const smoothScrollSettings = {
   distanceFromTopDesktop: 20,
   distanceFromTopMobile: 95,
   animationDuration: 800,
+  changeUrl: false,
 };
 
-// setting event listeners for smooth scrolling
-smoothScrollLinks = document.querySelectorAll(".js-scroll");
+// setting event listeners for anchor tags with # in the href attribute
+const smoothScrollLinks = document.querySelectorAll("a[href*='#']");
 smoothScrollLinks.forEach(function (smoothScrollLink) {
   smoothScrollLink.addEventListener("click", smoothScroll);
 });
 
+// setting event listeners for elements with the js-scroll class
+const smoothScrollElements = document.querySelectorAll(".js-scroll");
+smoothScrollElements.forEach(function (smoothScrollElement) {
+  smoothScrollElement.addEventListener("click", smoothScroll);
+});
+
+// function for smooth scrolling
 function smoothScroll(event) {
   event.preventDefault();
-  const targetQuerySelector = event.currentTarget.getAttribute("href");
+
+  let targetQuerySelector;
+  if (event.currentTarget.tagName == "A") {
+    targetQuerySelector = event.currentTarget.getAttribute("href");
+    if (smoothScrollSettings.changeUrl) {
+      history.replaceState(undefined, undefined, targetQuerySelector);
+    }
+  } else if (
+    (" " + event.currentTarget.className + " ").indexOf(".js-scroll" > -1) &&
+    event.currentTarget.dataset.target
+  ) {
+    targetQuerySelector = event.currentTarget.dataset.target;
+  } else {
+    targetQuerySelector = "#";
+    console.error(
+      "ERROR: No valid element provided, make sure you are using data-target='targetQuerySelector' to set the target element."
+    );
+  }
 
   // the targetPosition depends on the screen width
   const screenWidth =
@@ -23,24 +48,22 @@ function smoothScroll(event) {
 
   // calculate how many px will need to be scrolled
   if (screenWidth > smoothScrollSettings.navigationBreakpoint) {
-    navigationHeight = smoothScrollSettings.distanceFromTopDesktop;
+    distanceFromTop = smoothScrollSettings.distanceFromTopDesktop;
   } else {
-    navigationHeight = smoothScrollSettings.distanceFromTopMobile;
+    distanceFromTop = smoothScrollSettings.distanceFromTopMobile;
   }
 
   // if targetQuerySelector = "#" --> scroll to top
   const targetPosition =
     targetQuerySelector == "#"
       ? 0
-      : document.querySelector(targetQuerySelector).offsetTop -
-        navigationHeight;
+      : document.querySelector(targetQuerySelector).offsetTop - distanceFromTop;
 
   const startPosition = window.pageYOffset;
   let distance = targetPosition - startPosition;
   const duration = smoothScrollSettings.animationDuration;
   let start = null;
 
-  // animation
   window.requestAnimationFrame(step);
 
   // abort scrolling when user scrolls
@@ -56,7 +79,7 @@ function smoothScroll(event) {
       abortAnimation = true;
     }
 
-    // if user didn't scroll during the animation
+    // if user didn't scroll
     if (!abortAnimation) {
       const progress = timestamp - start;
       const newPos = timingFunction(
