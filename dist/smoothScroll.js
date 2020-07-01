@@ -1,48 +1,34 @@
-interface Settings {
-  easingFunction(t: number): number;
-  animationDuration: number;
-  changeUrl: boolean;
-  navigationBreakpoint: number;
-  distanceFromTopDesktop: number;
-  distanceFromTopMobile: number;
-  closeMenu?(): void;
-}
-
-const smoothScrollSettings: Settings = {
+var smoothScrollSettings = {
   easingFunction: easeOutCubic,
   animationDuration: 600,
   changeUrl: true,
   navigationBreakpoint: 800,
   distanceFromTopDesktop: 0,
   distanceFromTopMobile: 0,
-  /* closeMenu: closeMenu, */
+  // closeMenu: closeMenu,
 };
+
 // function closeMenu() {
 //   console.log("closing menu...");
 // }
 
 // setting event listeners for anchor tags with # in the href attribute
-const smoothScrollLinks: NodeListOf<HTMLElement> = document.querySelectorAll(
-  "a[href*='#']"
-);
+var smoothScrollLinks = document.querySelectorAll("a[href*='#']");
 smoothScrollLinks.forEach(function (smoothScrollLink) {
   smoothScrollLink.addEventListener("click", smoothScroll);
 });
-
 // setting event listeners for elements with the js-scroll class
-const smoothScrollElements: NodeListOf<HTMLElement> = document.querySelectorAll(
-  ".js-scroll"
-);
+var smoothScrollElements = document.querySelectorAll(".js-scroll");
 smoothScrollElements.forEach(function (smoothScrollElement) {
   smoothScrollElement.addEventListener("click", smoothScroll);
 });
 
 // function for smooth scrolling
-function smoothScroll(event: MouseEvent) {
+function smoothScroll(event) {
   event.preventDefault();
-  const currentTarget: HTMLElement = event.currentTarget as HTMLElement;
+  var currentTarget = event.currentTarget;
 
-  let targetQuerySelector;
+  var targetQuerySelector;
   if (currentTarget.tagName == "A") {
     targetQuerySelector = currentTarget.getAttribute("href");
     if (smoothScrollSettings.changeUrl) {
@@ -65,13 +51,13 @@ function smoothScroll(event: MouseEvent) {
   }
 
   // the targetPosition depends on the screen width
-  const screenWidth =
+  var screenWidth =
     window.innerWidth ||
     document.documentElement.clientWidth ||
     document.getElementsByTagName("body")[0].clientWidth;
 
   // calculate how many px will need to be scrolled
-  let distanceFromTop;
+  var distanceFromTop;
   if (screenWidth > smoothScrollSettings.navigationBreakpoint) {
     distanceFromTop = smoothScrollSettings.distanceFromTopDesktop;
   } else {
@@ -79,33 +65,31 @@ function smoothScroll(event: MouseEvent) {
   }
 
   // if targetQuerySelector = "#" --> scroll to top
-  let targetElement: HTMLElement;
-
-  let targetPosition: number;
-
+  var targetElement;
+  var targetPosition;
   if (targetQuerySelector === "#") {
     targetPosition = 0;
   } else {
-    targetElement = document.querySelector(targetQuerySelector!) as HTMLElement;
+    targetElement = document.querySelector(targetQuerySelector);
     targetPosition = targetElement.offsetTop - distanceFromTop;
   }
 
-  const startPosition = window.pageYOffset;
-  let distance = targetPosition - startPosition;
-  const duration = smoothScrollSettings.animationDuration;
-  let start: number | null = null;
+  var startPosition = window.pageYOffset;
+  var distance = targetPosition - startPosition;
+  var duration = smoothScrollSettings.animationDuration;
+  var start = null;
 
   window.requestAnimationFrame(step);
 
   // abort scrolling when user scrolls
-  let previousPosition: number | null = null;
-  let abortAnimation = false;
-
-  function step(timestamp: number) {
+  var previousPosition = null;
+  var abortAnimation = false;
+  function step(timestamp) {
     if (!start) {
       start = timestamp;
       previousPosition = window.pageYOffset;
     }
+
     if (
       previousPosition &&
       parseInt(previousPosition.toString()) != window.pageYOffset
@@ -116,9 +100,9 @@ function smoothScroll(event: MouseEvent) {
     // if user didn't scroll
     if (!abortAnimation) {
       // calculating next position
-      const progress = timestamp - start;
-      const t = progress / smoothScrollSettings.animationDuration;
-      const newPos =
+      var progress = timestamp - start;
+      var t = progress / smoothScrollSettings.animationDuration;
+      var newPos =
         startPosition + distance * smoothScrollSettings.easingFunction(t);
 
       // scrolling and checking if animation should end
@@ -137,18 +121,15 @@ function smoothScroll(event: MouseEvent) {
   }
 }
 
-function linear(t: number): number {
+function linear(t) {
   return t;
 }
-
-function easeInCubic(t: number): number {
+function easeInCubic(t) {
   return t * t * t;
 }
-
-function easeOutCubic(t: number): number {
+function easeOutCubic(t) {
   return --t * t * t + 1;
 }
-
-function easeInOutCubic(t: number): number {
+function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 }
