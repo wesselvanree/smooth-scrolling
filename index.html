@@ -8,14 +8,14 @@
   </head>
   <body>
     <div class="navigation">
-      <!-- href can be a class or an id -->
-      <a class="js-scroll" href=".first-heading">First</a>
-      <a class="js-scroll" href=".second-heading">Second</a>
-      <!-- scroll-class can be added to any tag -->
-      <p class="js-scroll" href="#third-heading">Third</p>
+      <!-- a tags with '#' in the href attribute are automatically detected -->
+      <a class="button" href="#first-heading">First</a>
+      <a class="button" href="#second-heading">Second</a>
+      <!-- the js-scroll can be added to any tag, use data-target to define a target -->
+      <p class="button js-scroll" data-target="#third-heading">Third</p>
     </div>
     <main>
-      <h1 class="first-heading">Smooth Scrolling</h1>
+      <h1 id="first-heading">Smooth Scrolling</h1>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Maecenas ultricies
@@ -33,7 +33,7 @@
         volutpat odio facilisis mauris sit. Mi quis hendrerit dolor magna eget
         est lorem. In dictum non consectetur a.
       </p>
-      <h1 class="second-heading">Header 2</h1>
+      <h1 id="second-heading">Header 2</h1>
       <p>
         Dolor sit amet consectetur adipiscing elit ut aliquam purus sit.
         Tristique sollicitudin nibh sit amet commodo nulla facilisi nullam. Sed
@@ -67,8 +67,8 @@
       </p>
     </main>
     <div class="top">
-      <!-- set href="#" to scroll to top -->
-      <a href="#" class="js-scroll">Back to Top</a>
+      <!-- set the target to "#" to scroll to top -->
+      <p data-target="#" class="button js-scroll">Back to Top</p>
     </div>
 
     <footer>
