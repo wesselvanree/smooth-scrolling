@@ -1,55 +1,79 @@
-const smoothScrollSettings = {
+/*
+Easing functions options are:
+  - linear
+  - easeInCubic
+  - easeOutCubic
+  - easeInOutCubic
+*/
+var smoothScrollSettings = {
   easingFunction: easeOutCubic,
   animationDuration: 600,
-  changeUrl: false,
-  navigationBreakpoint: 798,
+  changeUrl: true,
+  navigationBreakpoint: 900,
   distanceFromTopDesktop: 20,
-  distanceFromTopMobile: 95,
-  // closeMenu: closeMenu,
+  distanceFromTopMobile: 90,
 };
 
-// setting event listeners for anchor tags with # in the href attribute
-const smoothScrollLinks = document.querySelectorAll("a[href*='#']");
-smoothScrollLinks.forEach(function (smoothScrollLink) {
-  smoothScrollLink.addEventListener("click", smoothScroll);
-});
+// function closeMenu() {
+//   console.log("closing menu...");
+// }
 
-// setting event listeners for elements with the js-scroll class
-const smoothScrollElements = document.querySelectorAll(".js-scroll");
-smoothScrollElements.forEach(function (smoothScrollElement) {
-  smoothScrollElement.addEventListener("click", smoothScroll);
-});
+function setScrollEventListeners() {
+  // setting event listeners for anchor tags with # in the href attribute
+  var smoothScrollLinks = document.querySelectorAll("a[href*='#']");
+  smoothScrollLinks.forEach(function (smoothScrollLink) {
+    smoothScrollLink.addEventListener("click", smoothScroll);
+  });
+  // setting event listeners for elements with the js-scroll class
+  var smoothScrollElements = document.querySelectorAll(".js-scroll");
+  smoothScrollElements.forEach(function (smoothScrollElement) {
+    smoothScrollElement.addEventListener("click", smoothScroll);
+  });
+}
+setScrollEventListeners();
 
 // function for smooth scrolling
 function smoothScroll(event) {
   event.preventDefault();
+  var currentTarget = event.currentTarget;
 
-  let targetQuerySelector;
-  if (event.currentTarget.tagName == "A") {
-    targetQuerySelector = event.currentTarget.getAttribute("href");
+  // get the target query selector
+  var targetQuerySelector = "#";
+  if (currentTarget.tagName == "A") {
+    targetQuerySelector = currentTarget.getAttribute("href");
     if (smoothScrollSettings.changeUrl) {
-      history.replaceState(undefined, undefined, targetQuerySelector);
+      history.replaceState(null, "", targetQuerySelector);
     }
   } else if (
-    (" " + event.currentTarget.className + " ").indexOf(".js-scroll" > -1) &&
-    event.currentTarget.dataset.target
+    currentTarget.classList.contains("js-scroll") &&
+    currentTarget.dataset.target
   ) {
-    targetQuerySelector = event.currentTarget.dataset.target;
+    targetQuerySelector = currentTarget.dataset.target;
   } else {
-    targetQuerySelector = "#";
     console.error(
       "ERROR: No valid element provided, make sure you are using data-target='targetQuerySelector' to set the target element."
     );
   }
 
+  // update url if target is an id
+  if (smoothScrollSettings.changeUrl && targetQuerySelector === "#") {
+    history.replaceState(null, "", " ");
+  } else if (
+    smoothScrollSettings.changeUrl &&
+    typeof targetQuerySelector === "string" &&
+    targetQuerySelector[0] === "#"
+  ) {
+    history.replaceState(null, "", targetQuerySelector);
+  }
+
   // the targetPosition depends on the screen width
-  const screenWidth =
+  var screenWidth =
     window.innerWidth ||
     document.documentElement.clientWidth ||
     document.getElementsByTagName("body")[0].clientWidth;
 
   // calculate how many px will need to be scrolled
-  let distanceFromTop;
+  var distanceFromTop;
   if (screenWidth > smoothScrollSettings.navigationBreakpoint) {
     distanceFromTop = smoothScrollSettings.distanceFromTopDesktop;
   } else {
@@ -57,39 +81,46 @@ function smoothScroll(event) {
   }
 
   // if targetQuerySelector = "#" --> scroll to top
-  const targetPosition =
-    targetQuerySelector == "#"
-      ? 0
-      : document.querySelector(targetQuerySelector).offsetTop - distanceFromTop;
+  var targetElement;
+  var targetPosition;
+  if (targetQuerySelector === "#") {
+    targetPosition = 0;
+  } else {
+    targetElement = document.querySelector(targetQuerySelector);
+    targetPosition = targetElement.offsetTop - distanceFromTop;
+  }
 
-  const startPosition = window.pageYOffset;
-  let distance = targetPosition - startPosition;
-  const duration = smoothScrollSettings.animationDuration;
-  let start = null;
+  var startPosition = window.pageYOffset;
+  var distance = targetPosition - startPosition;
+  var duration = smoothScrollSettings.animationDuration;
+  var start = null;
 
   window.requestAnimationFrame(step);
 
   // abort scrolling when user scrolls
-  let previousPosition = null;
-  let abortAnimation = false;
-
+  var previousPosition = null;
+  var abortAnimation = false;
   function step(timestamp) {
     if (!start) {
       start = timestamp;
       previousPosition = window.pageYOffset;
     }
-    if (previousPosition && parseInt(previousPosition) != window.pageYOffset) {
+
+    // check if user scrolled
+    if (
+      previousPosition &&
+      parseInt(previousPosition.toString()) != window.pageYOffset
+    ) {
       abortAnimation = true;
     }
 
     // if user didn't scroll
     if (!abortAnimation) {
       // calculating next position
-      const progress = timestamp - start;
-      const t = progress / smoothScrollSettings.animationDuration;
-      const newPos =
+      var progress = timestamp - start;
+      var t = progress / smoothScrollSettings.animationDuration;
+      var newPos =
         startPosition + distance * smoothScrollSettings.easingFunction(t);
-
       // scrolling and checking if animation should end
       window.scrollTo(0, newPos);
       if (progress < duration) {
@@ -101,6 +132,7 @@ function smoothScroll(event) {
     }
   }
 
+  // if function to close menu is provided
   if (smoothScrollSettings.closeMenu) {
     smoothScrollSettings.closeMenu();
   }
@@ -110,18 +142,14 @@ function linear(t) {
   return t;
 }
 
-function easeOutCubic(t) {
-  return --t * t * t + 1;
-}
-
 function easeInCubic(t) {
   return t * t * t;
+}
+
+function easeOutCubic(t) {
+  return --t * t * t + 1;
 }
 
 function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 }
-
-// function closeMenu() {
-//   console.log("closing menu...");
-// }

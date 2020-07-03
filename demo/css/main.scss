@@ -1,3 +1,5 @@
+$blue: #377cf3;
+
 * {
   box-sizing: border-box;
 }
@@ -22,13 +24,13 @@ p {
 
 a {
   text-decoration: none;
-  color: blue;
+  color: $blue;
 }
 
 .button {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  color: blue;
+  color: $blue;
   margin-left: 20px;
   cursor: pointer;
   white-space: nowrap;

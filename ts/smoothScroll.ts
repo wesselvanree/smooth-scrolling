@@ -1,3 +1,10 @@
+interface Easings {
+  linear(t: number): number;
+  easeInCubic(t: number): number;
+  easeOutCubic(t: number): number;
+  easeInOutCubic(t: number): number;
+}
+
 interface Settings {
   easingFunction(t: number): number;
   animationDuration: number;
@@ -8,6 +15,13 @@ interface Settings {
   closeMenu?(): void;
 }
 
+/*
+Easing functions options are:
+  - linear
+  - easeInCubic
+  - easeOutCubic
+  - easeInOutCubic
+*/
 const smoothScrollSettings: Settings = {
   easingFunction: easeOutCubic,
   animationDuration: 600,
@@ -21,28 +35,33 @@ const smoothScrollSettings: Settings = {
 //   console.log("closing menu...");
 // }
 
-// setting event listeners for anchor tags with # in the href attribute
-const smoothScrollLinks: NodeListOf<HTMLElement> = document.querySelectorAll(
-  "a[href*='#']"
-);
-smoothScrollLinks.forEach(function (smoothScrollLink) {
-  smoothScrollLink.addEventListener("click", smoothScroll);
-});
+function setScrollEventListeners(): void {
+  // setting event listeners for anchor tags with # in the href attribute
+  const smoothScrollLinks: NodeListOf<HTMLElement> = document.querySelectorAll(
+    "a[href*='#']"
+  );
+  smoothScrollLinks.forEach(function (smoothScrollLink) {
+    smoothScrollLink.addEventListener("click", smoothScroll);
+  });
 
-// setting event listeners for elements with the js-scroll class
-const smoothScrollElements: NodeListOf<HTMLElement> = document.querySelectorAll(
-  ".js-scroll"
-);
-smoothScrollElements.forEach(function (smoothScrollElement) {
-  smoothScrollElement.addEventListener("click", smoothScroll);
-});
+  // setting event listeners for elements with the js-scroll class
+  const smoothScrollElements: NodeListOf<HTMLElement> = document.querySelectorAll(
+    ".js-scroll"
+  );
+  smoothScrollElements.forEach(function (smoothScrollElement) {
+    smoothScrollElement.addEventListener("click", smoothScroll);
+  });
+}
+
+setScrollEventListeners();
 
 // function for smooth scrolling
 function smoothScroll(event: MouseEvent) {
   event.preventDefault();
   const currentTarget: HTMLElement = event.currentTarget as HTMLElement;
 
-  let targetQuerySelector;
+  // get the target query selector
+  let targetQuerySelector: string | null = "#";
   if (currentTarget.tagName == "A") {
     targetQuerySelector = currentTarget.getAttribute("href");
     if (smoothScrollSettings.changeUrl) {
@@ -54,14 +73,20 @@ function smoothScroll(event: MouseEvent) {
   ) {
     targetQuerySelector = currentTarget.dataset.target;
   } else {
-    targetQuerySelector = "#";
     console.error(
       "ERROR: No valid element provided, make sure you are using data-target='targetQuerySelector' to set the target element."
     );
   }
 
-  if (targetQuerySelector === "#") {
+  // update url if target is an id
+  if (smoothScrollSettings.changeUrl && targetQuerySelector === "#") {
     history.replaceState(null, "", " ");
+  } else if (
+    smoothScrollSettings.changeUrl &&
+    typeof targetQuerySelector === "string" &&
+    targetQuerySelector[0] === "#"
+  ) {
+    history.replaceState(null, "", targetQuerySelector);
   }
 
   // the targetPosition depends on the screen width
@@ -106,6 +131,8 @@ function smoothScroll(event: MouseEvent) {
       start = timestamp;
       previousPosition = window.pageYOffset;
     }
+
+    // check if user scrolled
     if (
       previousPosition &&
       parseInt(previousPosition.toString()) != window.pageYOffset
@@ -132,6 +159,7 @@ function smoothScroll(event: MouseEvent) {
     }
   }
 
+  // if function to close menu is provided
   if (smoothScrollSettings.closeMenu) {
     smoothScrollSettings.closeMenu();
   }
