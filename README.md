@@ -16,7 +16,7 @@ Smooth scrolling for links that refer to an element on the same page using `wind
 
 ## How To Use
 
-To start using this script, first download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/smooth-scrolling/master/smoothScroll.js) file or copy the code in your own file js file.
+To start using this script, first download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/smooth-scrolling/master/dist/smoothScroll.js) file or copy the code in your own file js file.
 
 ### Configuration
 
