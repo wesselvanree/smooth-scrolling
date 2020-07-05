@@ -1,25 +1,93 @@
-# Smooth scrolling for webpages <!-- omit in toc -->
+# Smooth Scrolling for Websites
 
-### Table of Contents <!-- omit in toc -->
+Smooth scroll to elements on a website with javascript using `window.requestAnimationFrame` ([browser support](https://caniuse.com/#feat=requestanimationframe)).
 
-- [Description](#description)
-- [How To Use](#how-to-use)
-  - [Configuration](#configuration)
+## Installation
+Download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/smooth-scrolling/master/dist/smoothScroll.js) file and add it to your project. After that, refer to the javaScript file in your html code.
 
-<br />
+```html
+<script src="path/to/file/smoothScroll.js"></script>
+```
 
-## Description
+## Getting started
 
-Smooth scrolling for links that refer to an element on the same page using `window.requestAnimationFrame`. You can add extra space between the top of the window and the target element. You can add one of two different values on from the top of the window depending on the given breakpoint.
+`<a>` tags with the *href* attribute set to an *id* are automatically detected. When the user clicks on that link, the user will automatically scroll to the referenced element. To use smooth scrolling with other elements, add the `.js-scroll` class to the element and set the target with the `data-target` attribute. `data-target` can contain any querySelector. Here are some examples.
+```html
+<!-- automatically detected -->
+<a href="#heading-1">Heading 1</a>
 
-<br />
+<!-- Other -->
+<div class="js-scroll" data-target="#heading-1">
+  <p></p>
+</div>
+<div class="js-scroll" data-target=".class-of-element">
+  <p>Note that the url will only update when the target querySelector is an id</p>
+</div>
+```
 
-## How To Use
+### Preferences
 
-To start using this script, first download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/smooth-scrolling/master/dist/smoothScroll.js) file or copy the code in your own file js file.
+Edit the smoothScrollSettings object at the top of the file to your own preferences.
 
-### Configuration
+```js
+var smoothScrollSettings = {
+  easing: "easeOutCubic",
+  animationDuration: 600,
+  changeUrl: true,
+  navigationBreakpoint: 800,
+  distanceFromTopDesktop: 0,
+  distanceFromTopMobile: 0,
+  // customFunction: closeMenu
+};
+```
 
-TODO: update README.md
+`easing`: this is the easing function used in the animation. Take a look at  [easings.net](https://easings.net/) to see how each function works. These options are valid:
+- linear
+- easeInCubic
+- easeOutCubic
+- easeInOutCubic
+- easeInQuad
+- easeOutQuad
+- easeInOutQuad
+- easeInQuart
+- easeOutQuart
+- easeInOutQuart
+- easeInQuint
+- easeOutQuint
+- easeInOutQuint
 
-For more easing functions, take a look at  [easings.net](https://easings.net/). When you have chosen which one you want, I recommend looking at the javascript function [here](https://gist.github.com/gre/1650294).
+`animationDuration`: the duration of the animation in milliseconds.
+
+`changeUrl`: Controls whether the url should be updated when the target is an id. The value should be *true* or *false*.
+
+`navigationBreakpoint`: When using navigations with different heights for mobile and desktop. This should be the amount of pixels where the navigation changes height.
+
+`distanceFromTopDesktop`: Amount of pixels added between top of the screen and the target element on Desktop (width bigger than `navigationBreakpoint`).
+
+`distanceFromTopMobile`: Amount of pixels added between top of the screen and the target element on mobile (width smaller than `navigationBreakpoint`).
+
+`customFunction` *(optional)*: Add a custom function that will be executed after the animation.
+
+## Built With
+
+- [TypeScript](https://www.typescriptlang.org/docs/)
+
+<!-- ## Contributing
+
+Please read [CONTRIBUTING.md]() for details on our code of conduct, and the process for submitting pull requests to us. -->
+
+<!-- ## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+ -->
+
+<!-- ## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details -->
+
+<!-- ## Acknowledgments
+
+- Hat tip to anyone whose code was used
+- Inspiration
+- etc
+ -->
