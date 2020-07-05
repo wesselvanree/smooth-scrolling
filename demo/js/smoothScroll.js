@@ -15,7 +15,7 @@ Easing functions:
   - easeInOutQuint
 */
 var smoothScrollSettings = {
-  easing: "easeOutCubic",
+  easing: "easeOutQuart",
   animationDuration: 600,
   changeUrl: true,
   navigationBreakpoint: 900,
