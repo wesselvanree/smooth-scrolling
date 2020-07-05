@@ -42,7 +42,7 @@ var smoothScrollSettings = {
 };
 ```
 
-`easing`: this is the easing function used in the animation. Take a look at  [easings.net](https://easings.net/) to see how each function works. These options are valid:
+`easing`: this is the easing function used in the animation. Take a look at  [easings.net](https://easings.net/) to see how each function works. These options can be chosen:
 - linear
 - easeInCubic
 - easeOutCubic
