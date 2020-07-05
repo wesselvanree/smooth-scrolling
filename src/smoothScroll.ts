@@ -201,7 +201,7 @@ function smoothScroll(event: MouseEvent) {
     }
   }
 
-  // if cusotm function is provided
+  // if custom function is provided
   if (smoothScrollSettings.customFunction) {
     smoothScrollSettings.customFunction();
   }
