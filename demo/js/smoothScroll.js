@@ -1,22 +1,75 @@
 /*
-Easing functions options are:
+Easing functions:
   - linear
   - easeInCubic
   - easeOutCubic
   - easeInOutCubic
+  - easeInQuad
+  - easeOutQuad
+  - easeInOutQuad
+  - easeInQuart
+  - easeOutQuart
+  - easeInOutQuart
+  - easeInQuint
+  - easeOutQuint
+  - easeInOutQuint
 */
 var smoothScrollSettings = {
-  easingFunction: easeOutCubic,
+  easing: "easeOutCubic",
   animationDuration: 600,
   changeUrl: true,
   navigationBreakpoint: 900,
   distanceFromTopDesktop: 20,
   distanceFromTopMobile: 90,
+  // customFunction: closeMenu
 };
 
 // function closeMenu() {
 //   console.log("closing menu...");
 // }
+
+// easing functions
+var easings = {
+  linear: function (t) {
+    return t;
+  },
+  easeInQuad: function (t) {
+    return t * t;
+  },
+  easeOutQuad: function (t) {
+    return t * (2 - t);
+  },
+  easeInOutQuad: function (t) {
+    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  },
+  easeInCubic: function (t) {
+    return t * t * t;
+  },
+  easeOutCubic: function (t) {
+    return --t * t * t + 1;
+  },
+  easeInOutCubic: function (t) {
+    return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+  },
+  easeInQuart: function (t) {
+    return t * t * t * t;
+  },
+  easeOutQuart: function (t) {
+    return 1 - --t * t * t * t;
+  },
+  easeInOutQuart: function (t) {
+    return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
+  },
+  easeInQuint: function (t) {
+    return t * t * t * t * t;
+  },
+  easeOutQuint: function (t) {
+    return 1 + --t * t * t * t * t;
+  },
+  easeInOutQuint: function (t) {
+    return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
+  },
+};
 
 function setScrollEventListeners() {
   // setting event listeners for anchor tags with # in the href attribute
@@ -95,11 +148,15 @@ function smoothScroll(event) {
   var duration = smoothScrollSettings.animationDuration;
   var start = null;
 
+  // setting easingfunction
+  var easing = easings[smoothScrollSettings.easing];
+
   window.requestAnimationFrame(step);
 
   // abort scrolling when user scrolls
   var previousPosition = null;
   var abortAnimation = false;
+
   function step(timestamp) {
     if (!start) {
       start = timestamp;
@@ -119,8 +176,7 @@ function smoothScroll(event) {
       // calculating next position
       var progress = timestamp - start;
       var t = progress / smoothScrollSettings.animationDuration;
-      var newPos =
-        startPosition + distance * smoothScrollSettings.easingFunction(t);
+      var newPos = startPosition + distance * easing(t);
       // scrolling and checking if animation should end
       window.scrollTo(0, newPos);
       if (progress < duration) {
@@ -132,24 +188,8 @@ function smoothScroll(event) {
     }
   }
 
-  // if function to close menu is provided
-  if (smoothScrollSettings.closeMenu) {
-    smoothScrollSettings.closeMenu();
+  // if custom function is provided
+  if (smoothScrollSettings.customFunction) {
+    smoothScrollSettings.customFunction();
   }
-}
-
-function linear(t) {
-  return t;
-}
-
-function easeInCubic(t) {
-  return t * t * t;
-}
-
-function easeOutCubic(t) {
-  return --t * t * t + 1;
-}
-
-function easeInOutCubic(t) {
-  return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 }

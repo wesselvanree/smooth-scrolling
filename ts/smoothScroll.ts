@@ -3,37 +3,77 @@ interface Easings {
   easeInCubic(t: number): number;
   easeOutCubic(t: number): number;
   easeInOutCubic(t: number): number;
+  easeInQuad(t: number): number;
+  easeOutQuad(t: number): number;
+  easeInOutQuad(t: number): number;
+  easeInQuart(t: number): number;
+  easeOutQuart(t: number): number;
+  easeInOutQuart(t: number): number;
+  easeInQuint(t: number): number;
+  easeOutQuint(t: number): number;
+  easeInOutQuint(t: number): number;
 }
 
 interface Settings {
-  easingFunction(t: number): number;
+  easing: keyof Easings;
   animationDuration: number;
   changeUrl: boolean;
   navigationBreakpoint: number;
   distanceFromTopDesktop: number;
   distanceFromTopMobile: number;
-  closeMenu?(): void;
+  customFunction?(): void;
 }
 
 /*
-Easing functions options are:
+Easing functions:
   - linear
   - easeInCubic
   - easeOutCubic
   - easeInOutCubic
+  - easeInQuad
+  - easeOutQuad
+  - easeInOutQuad
+  - easeInQuart
+  - easeOutQuart
+  - easeInOutQuart
+  - easeInQuint
+  - easeOutQuint
+  - easeInOutQuint
 */
 const smoothScrollSettings: Settings = {
-  easingFunction: easeOutCubic,
+  easing: "easeOutCubic",
   animationDuration: 600,
   changeUrl: true,
   navigationBreakpoint: 800,
   distanceFromTopDesktop: 0,
   distanceFromTopMobile: 0,
-  /* closeMenu: closeMenu, */
+  // customFunction: closeMenu,
 };
+
 // function closeMenu() {
 //   console.log("closing menu...");
 // }
+
+// easing functions
+const easings: Easings = {
+  linear: (t: number): number => t,
+  easeInQuad: (t: number): number => t * t,
+  easeOutQuad: (t: number): number => t * (2 - t),
+  easeInOutQuad: (t: number): number =>
+    t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+  easeInCubic: (t: number): number => t * t * t,
+  easeOutCubic: (t: number): number => --t * t * t + 1,
+  easeInOutCubic: (t: number): number =>
+    t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
+  easeInQuart: (t: number): number => t * t * t * t,
+  easeOutQuart: (t: number): number => 1 - --t * t * t * t,
+  easeInOutQuart: (t: number): number =>
+    t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t,
+  easeInQuint: (t: number): number => t * t * t * t * t,
+  easeOutQuint: (t: number): number => 1 + --t * t * t * t * t,
+  easeInOutQuint: (t: number): number =>
+    t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t,
+};
 
 function setScrollEventListeners(): void {
   // setting event listeners for anchor tags with # in the href attribute
@@ -120,6 +160,9 @@ function smoothScroll(event: MouseEvent) {
   const duration = smoothScrollSettings.animationDuration;
   let start: number | null = null;
 
+  // setting easingfunction
+  const easing = easings[smoothScrollSettings.easing];
+
   window.requestAnimationFrame(step);
 
   // abort scrolling when user scrolls
@@ -145,8 +188,7 @@ function smoothScroll(event: MouseEvent) {
       // calculating next position
       const progress = timestamp - start;
       const t = progress / smoothScrollSettings.animationDuration;
-      const newPos =
-        startPosition + distance * smoothScrollSettings.easingFunction(t);
+      const newPos = startPosition + distance * easing(t);
 
       // scrolling and checking if animation should end
       window.scrollTo(0, newPos);
@@ -159,24 +201,8 @@ function smoothScroll(event: MouseEvent) {
     }
   }
 
-  // if function to close menu is provided
-  if (smoothScrollSettings.closeMenu) {
-    smoothScrollSettings.closeMenu();
+  // if cusotm function is provided
+  if (smoothScrollSettings.customFunction) {
+    smoothScrollSettings.customFunction();
   }
-}
-
-function linear(t: number): number {
-  return t;
-}
-
-function easeInCubic(t: number): number {
-  return t * t * t;
-}
-
-function easeOutCubic(t: number): number {
-  return --t * t * t + 1;
-}
-
-function easeInOutCubic(t: number): number {
-  return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 }
