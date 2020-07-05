@@ -1,6 +1,7 @@
 # Smooth Scrolling for Websites
+[Demo](https://wesselvanree.github.io/smooth-scrolling/)
 
-Smooth scroll to elements on a website with javascript using `window.requestAnimationFrame` ([browser support](https://caniuse.com/#feat=requestanimationframe)).
+Smooth scroll to elements on a website with javascript using `window.requestAnimationFrame` ([browser support](https://caniuse.com/#feat=requestanimationframe)). Space can be added between the top of the screen and the target element.
 
 ## Installation
 Download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/smooth-scrolling/master/dist/smoothScroll.js) file and add it to your project. After that, refer to the javaScript file in your html code.
