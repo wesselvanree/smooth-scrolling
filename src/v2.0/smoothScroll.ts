@@ -1,58 +1,72 @@
-var SmoothScroll = /** @class */ (function () {
-  function SmoothScroll(smoothScrollSettings) {
-    this.isMobileDevice = false;
-    this.easings = {
-      linear: function (t) {
-        return t;
-      },
-      easeInQuad: function (t) {
-        return t * t;
-      },
-      easeOutQuad: function (t) {
-        return t * (2 - t);
-      },
-      easeInOutQuad: function (t) {
-        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-      },
-      easeInCubic: function (t) {
-        return t * t * t;
-      },
-      easeOutCubic: function (t) {
-        return --t * t * t + 1;
-      },
-      easeInOutCubic: function (t) {
-        return t < 0.5
-          ? 4 * t * t * t
-          : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-      },
-      easeInQuart: function (t) {
-        return t * t * t * t;
-      },
-      easeOutQuart: function (t) {
-        return 1 - --t * t * t * t;
-      },
-      easeInOutQuart: function (t) {
-        return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-      },
-      easeInQuint: function (t) {
-        return t * t * t * t * t;
-      },
-      easeOutQuint: function (t) {
-        return 1 + --t * t * t * t * t;
-      },
-      easeInOutQuint: function (t) {
-        return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
-      },
-    };
-    this.settings = {
-      timingFunction: this.easings.easeOutQuint,
-      animationDuration: 600,
-      changeUrl: true,
-      navigationBreakpoint: 800,
-      distanceFromTopDesktop: 0,
-      distanceFromTopMobile: 0,
-    };
-    this.currentEvent = null;
+interface Easings {
+  linear(t: number): number;
+  easeInCubic(t: number): number;
+  easeOutCubic(t: number): number;
+  easeInOutCubic(t: number): number;
+  easeInQuad(t: number): number;
+  easeOutQuad(t: number): number;
+  easeInOutQuad(t: number): number;
+  easeInQuart(t: number): number;
+  easeOutQuart(t: number): number;
+  easeInOutQuart(t: number): number;
+  easeInQuint(t: number): number;
+  easeOutQuint(t: number): number;
+  easeInOutQuint(t: number): number;
+}
+
+interface Setting {
+  timingFunction(t: number): number;
+  animationDuration: number;
+  changeUrl: boolean;
+  navigationBreakpoint: number;
+  distanceFromTopDesktop: number;
+  distanceFromTopMobile: number;
+  customFunction?: Function;
+}
+
+interface SmoothScrollSettings {
+  easing?: keyof Easings;
+  animationDuration?: number;
+  changeUrl?: boolean;
+  navigationBreakpoint?: number;
+  distanceFromTopDesktop?: number;
+  distanceFromTopMobile?: number;
+  customFunction?: Function;
+}
+
+class SmoothScroll {
+  isMobileDevice: boolean = false;
+  easings: Easings = {
+    linear: (t: number): number => t,
+    easeInQuad: (t: number): number => t * t,
+    easeOutQuad: (t: number): number => t * (2 - t),
+    easeInOutQuad: (t: number): number =>
+      t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+    easeInCubic: (t: number): number => t * t * t,
+    easeOutCubic: (t: number): number => --t * t * t + 1,
+    easeInOutCubic: (t: number): number =>
+      t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
+    easeInQuart: (t: number): number => t * t * t * t,
+    easeOutQuart: (t: number): number => 1 - --t * t * t * t,
+    easeInOutQuart: (t: number): number =>
+      t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t,
+    easeInQuint: (t: number): number => t * t * t * t * t,
+    easeOutQuint: (t: number): number => 1 + --t * t * t * t * t,
+    easeInOutQuint: (t: number): number =>
+      t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t,
+  };
+  settings: Setting = {
+    timingFunction: this.easings.easeOutQuint,
+    animationDuration: 600,
+    changeUrl: true,
+    navigationBreakpoint: 800,
+    distanceFromTopDesktop: 0,
+    distanceFromTopMobile: 0,
+    // customFunction: closeMenu,
+  };
+  currentEvent: null | MouseEvent = null;
+
+  constructor(smoothScrollSettings?: SmoothScrollSettings) {
     this.checkForMobileDevice();
     this.setEventListeners();
     if (smoothScrollSettings) {
@@ -85,7 +99,8 @@ var SmoothScroll = /** @class */ (function () {
       }
     }
   }
-  SmoothScroll.prototype.eventHandler = function () {
+
+  eventHandler() {
     if (this.currentEvent != null) {
       if (this.isMobileDevice) {
         this.scrollMobile(this.currentEvent);
@@ -93,8 +108,9 @@ var SmoothScroll = /** @class */ (function () {
         this.scroll(this.currentEvent);
       }
     }
-  };
-  SmoothScroll.prototype.checkForMobileDevice = function () {
+  }
+
+  checkForMobileDevice(): void {
     if (
       navigator.userAgent.match(/Android/i) ||
       navigator.userAgent.match(/webOS/i) ||
@@ -106,26 +122,29 @@ var SmoothScroll = /** @class */ (function () {
     ) {
       this.isMobileDevice = true;
     }
-  };
-  SmoothScroll.prototype.setEventListeners = function () {
-    var self = this;
+  }
+
+  setEventListeners(): void {
+    const self = this;
     // setting event listeners for anchor tags with # in the href attribute
-    var smoothScrollElements = document.querySelectorAll(
+    const smoothScrollElements: NodeListOf<HTMLElement> = document.querySelectorAll(
       "a[href*='#'], .js-scroll"
     );
     smoothScrollElements.forEach(function (smoothScrollElement) {
-      smoothScrollElement.addEventListener("click", function (event) {
+      smoothScrollElement.addEventListener("click", (event) => {
         self.currentEvent = event;
         self.eventHandler();
       });
     });
-  };
-  SmoothScroll.prototype.scroll = function (event) {
+  }
+
+  scroll(event: MouseEvent) {
     event.preventDefault();
-    var currentTarget = event.currentTarget;
-    var self = this;
+    const currentTarget: HTMLElement = event.currentTarget as HTMLElement;
+    const self = this;
+
     // get the target query selector
-    var targetQuerySelector = "#";
+    let targetQuerySelector: string | null = "#";
     if (currentTarget.tagName == "A") {
       targetQuerySelector = currentTarget.getAttribute("href");
       if (self.settings.changeUrl) {
@@ -141,40 +160,51 @@ var SmoothScroll = /** @class */ (function () {
         "ERROR: No valid element provided, make sure you are using data-target='targetQuerySelector' to set the target element."
       );
     }
+
     // the targetPosition depends on the screen width
-    var screenWidth =
+    const screenWidth =
       window.innerWidth ||
       document.documentElement.clientWidth ||
       document.getElementsByTagName("body")[0].clientWidth;
+
     // calculate how many px will need to be scrolled
-    var distanceFromTop;
+    let distanceFromTop;
     if (screenWidth > self.settings.navigationBreakpoint) {
       distanceFromTop = self.settings.distanceFromTopDesktop;
     } else {
       distanceFromTop = self.settings.distanceFromTopMobile;
     }
+
     // if targetQuerySelector = "#" --> scroll to top
-    var targetElement;
-    var targetPosition;
+    let targetElement: HTMLElement;
+    let targetPosition: number;
+
     if (targetQuerySelector === "#") {
       targetPosition = 0;
     } else {
-      targetElement = document.querySelector(targetQuerySelector);
+      targetElement = document.querySelector(
+        targetQuerySelector!
+      ) as HTMLElement;
       targetPosition = targetElement.offsetTop - distanceFromTop;
     }
-    var startPosition = window.pageYOffset;
-    var distance = targetPosition - startPosition;
-    var duration = self.settings.animationDuration;
-    var start = null;
+
+    const startPosition = window.pageYOffset;
+    let distance = targetPosition - startPosition;
+    const duration = self.settings.animationDuration;
+    let start: number | null = null;
+
     window.requestAnimationFrame(step);
+
     // abort scrolling when user scrolls
-    var previousPosition = null;
-    var abortAnimation = false;
-    function step(timestamp) {
+    let previousPosition: number | null = null;
+    let abortAnimation = false;
+
+    function step(timestamp: number) {
       if (!start) {
         start = timestamp;
         previousPosition = window.pageYOffset;
       }
+
       // check if user scrolled
       if (
         previousPosition &&
@@ -182,12 +212,15 @@ var SmoothScroll = /** @class */ (function () {
       ) {
         abortAnimation = true;
       }
+
       // if user didn't scroll or is mobile device
       if (!abortAnimation) {
         // calculating next position
-        var progress = timestamp - start;
-        var t = progress / self.settings.animationDuration;
-        var newPos = startPosition + distance * self.settings.timingFunction(t);
+        const progress = timestamp - start;
+        const t = progress / self.settings.animationDuration;
+        const newPos =
+          startPosition + distance * self.settings.timingFunction(t);
+
         // scrolling and checking if animation should end
         window.scrollTo(0, newPos);
         if (progress < duration) {
@@ -198,6 +231,7 @@ var SmoothScroll = /** @class */ (function () {
         }
       }
     }
+
     // update url if target is an id
     if (self.settings.changeUrl && targetQuerySelector === "#") {
       history.replaceState(null, "", " ");
@@ -208,17 +242,20 @@ var SmoothScroll = /** @class */ (function () {
     ) {
       history.replaceState(null, "", targetQuerySelector);
     }
+
     // if custom function is provided
     if (self.settings.customFunction) {
       self.settings.customFunction();
     }
-  };
-  SmoothScroll.prototype.scrollMobile = function (event) {
+  }
+
+  scrollMobile(event: MouseEvent) {
     event.preventDefault();
-    var currentTarget = event.currentTarget;
-    var self = this;
+    const currentTarget: HTMLElement = event.currentTarget as HTMLElement;
+    const self = this;
+
     // get the target query selector
-    var targetQuerySelector = "#";
+    let targetQuerySelector: string | null = "#";
     if (currentTarget.tagName == "A") {
       targetQuerySelector = currentTarget.getAttribute("href");
       if (self.settings.changeUrl) {
@@ -234,42 +271,50 @@ var SmoothScroll = /** @class */ (function () {
         "ERROR: No valid element provided, make sure you are using data-target='targetQuerySelector' to set the target element."
       );
     }
+
     // the targetPosition depends on the screen width
-    var screenWidth =
+    const screenWidth =
       window.innerWidth ||
       document.documentElement.clientWidth ||
       document.getElementsByTagName("body")[0].clientWidth;
+
     // calculate how many px will need to be scrolled
-    var distanceFromTop;
+    let distanceFromTop;
     if (screenWidth > self.settings.navigationBreakpoint) {
       distanceFromTop = self.settings.distanceFromTopDesktop;
     } else {
       distanceFromTop = self.settings.distanceFromTopMobile;
     }
+
     // if targetQuerySelector = "#" --> scroll to top
-    var targetElement;
-    var targetPosition;
+    let targetElement: HTMLElement;
+    let targetPosition: number;
+
     if (targetQuerySelector === "#") {
       targetPosition = 0;
     } else {
-      targetElement = document.querySelector(targetQuerySelector);
+      targetElement = document.querySelector(
+        targetQuerySelector!
+      ) as HTMLElement;
       targetPosition = targetElement.offsetTop - distanceFromTop;
     }
-    var startPosition = window.pageYOffset;
-    var distance = targetPosition - startPosition;
-    var duration = self.settings.animationDuration;
-    var start = null;
+
+    const startPosition = window.pageYOffset;
+    let distance = targetPosition - startPosition;
+    const duration = self.settings.animationDuration;
+    let start: number | null = null;
+
     window.requestAnimationFrame(step);
-    function step(timestamp) {
+
+    function step(timestamp: number) {
       if (!start) start = timestamp;
-      var progress = timestamp - start;
-      var t = progress / self.settings.animationDuration;
-      var newPos = startPosition + distance * self.settings.timingFunction(t);
+      const progress = timestamp - start;
+      const t = progress / self.settings.animationDuration;
+      const newPos = startPosition + distance * self.settings.timingFunction(t);
       window.scrollTo(0, newPos);
       if (progress < duration) {
         window.requestAnimationFrame(step);
       }
     }
-  };
-  return SmoothScroll;
-})();
+  }
+}

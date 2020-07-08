@@ -1,16 +1,27 @@
-# Smooth Scrolling for Websites
+# Smooth Scrolling for Websites <!-- omit in toc -->
 [Demo](https://wesselvanree.github.io/smooth-scrolling/)
 
 Smooth scroll to elements on a website with javascript using `window.requestAnimationFrame` ([browser support](https://caniuse.com/#feat=requestanimationframe)). Space can be added between the top of the screen and the target element.
 
+- [Installation](#installation)
+- [Getting started](#getting-started)
+  - [Preferences](#preferences)
+- [Example](#example)
+- [Built With](#built-with)
+
 ## Installation
-Download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/smooth-scrolling/master/dist/smoothScroll.js) file and add it to your project. After that, refer to the javaScript file in your html code.
+Download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/smooth-scrolling/master/dist/smoothScroll.js) file and add it to your project above your other javascript files.
 
 ```html
 <script src="path/to/file/smoothScroll.js"></script>
 ```
 
 ## Getting started
+
+To start using this code, create a new instance of the `SmoothScroll` class.
+```js
+const smoothScroll = new SmoothScroll();
+```
 
 `<a>` tags with the *href* attribute set to an *id* are automatically detected. When the user clicks on that link, the user will automatically scroll to the referenced element. To use smooth scrolling with other elements, add the `.js-scroll` class to the element and set the target with the `data-target` attribute. `data-target` can contain any querySelector. Here are some examples.
 ```html
@@ -28,46 +39,97 @@ Download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/sm
 
 ### Preferences
 
-Edit the smoothScrollSettings object at the top of the file to your own preferences.
+You can pass a settings object when you initialize the new instance of the class. For example:
 
 ```js
-var smoothScrollSettings = {
-  easing: "easeOutCubic",
+const settings = {
+  easing: "easeOutQuint",
   animationDuration: 600,
   changeUrl: true,
   navigationBreakpoint: 800,
-  distanceFromTopDesktop: 0,
-  distanceFromTopMobile: 0,
-  // customFunction: closeMenu
+  distanceFromTopDesktop: 60,
+  distanceFromTopMobile: 50,
+  customFunction: closeMenu
 };
+
+const smoothScroll = new SmoothScroll(settings);
 ```
 
-`easing`: this is the easing function used in the animation. Take a look at  [easings.net](https://easings.net/) to see how each function works. These options can be chosen:
-- linear
-- easeInCubic
-- easeOutCubic
-- easeInOutCubic
-- easeInQuad
-- easeOutQuad
-- easeInOutQuad
-- easeInQuart
-- easeOutQuart
-- easeInOutQuart
-- easeInQuint
-- easeOutQuint
-- easeInOutQuint
+The following settings can be chosen, these are all optional so you don't have to set them all. If there is a default value, this value will be used when there is no other value given.
 
-`animationDuration`: the duration of the animation in milliseconds.
+- `easing`
+  - Default: `"easeOutQuint"`
+  - Description: This is the easing function used in the animation. Take a look at  [easings.net](https://easings.net/) to see how each function works.
+  - Options:
+    - "linear"
+    - "easeInCubic"
+    - "easeOutCubic"
+    - "easeInOutCubic"
+    - "easeInQuad"
+    - "easeOutQuad"
+    - "easeInOutQuad"
+    - "easeInQuart"
+    - "easeOutQuart"
+    - "easeInOutQuart"
+    - "easeInQuint"
+    - "easeOutQuint"
+    - "easeInOutQuint"
+<br>
 
-`changeUrl`: Controls whether the url should be updated when the target is an id. The value should be *true* or *false*.
+- `animationDuration`
+  - Default: `600`
+  - Description:  the duration of the animation in milliseconds.
+<br>
 
-`navigationBreakpoint`: When using navigations with different heights for mobile and desktop. This should be the amount of pixels where the navigation changes height.
+- `changeUrl`
+  - Default: `true`
+  - Description: Controls whether the url should be updated when the target is an id. The value should be *true* or *false*.
+<br>
 
-`distanceFromTopDesktop`: Amount of pixels added between top of the screen and the target element on Desktop (width bigger than `navigationBreakpoint`).
+- `navigationBreakpoint`
+  - Default: `0`
+  - Description: When using navigations with different heights for mobile and desktop. This should be the amount of pixels where the navigation changes height.
+<br>
 
-`distanceFromTopMobile`: Amount of pixels added between top of the screen and the target element on mobile (width smaller than `navigationBreakpoint`).
+- `distanceFromTopDesktop`
+  - Default: `0`
+  - Description: Amount of pixels added between top of the screen and the target element on Desktop (width bigger than `navigationBreakpoint`).
+<br>
 
-`customFunction` *(optional)*: Add a custom function that will be executed after the animation.
+- `distanceFromTopMobile`
+  - Default: `0`
+  - Description: Amount of pixels added between top of the screen and the target element on mobile (width smaller than `navigationBreakpoint`).
+<br>
+
+- `customFunction`
+  - Description: Add a custom function that will be executed after the animation.
+
+## Example
+
+*html*
+```html
+<script src="path/to/file/smoothScroll.js"></script>
+<script src="path/to/file/app.js"></script>
+```
+
+*app.js*:
+```js
+function closeMenu() {
+  document.querySelector(".menu").classList.remove("active");
+}
+
+const settings = {
+  easing: "easeOutQuint",
+  animationDuration: 600,
+  changeUrl: true,
+  navigationBreakpoint: 800,
+  distanceFromTopDesktop: 60,
+  distanceFromTopMobile: 50,
+  customFunction: closeMenu
+};
+
+const smoothScroll = new SmoothScroll(settings);
+```
 
 ## Built With
 

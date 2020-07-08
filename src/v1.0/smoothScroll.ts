@@ -41,12 +41,12 @@ Easing functions:
   - easeInOutQuint
 */
 const smoothScrollSettings: Settings = {
-  easing: "easeOutCubic",
+  easing: "easeOutQuint",
   animationDuration: 600,
   changeUrl: true,
   navigationBreakpoint: 800,
-  distanceFromTopDesktop: 0,
-  distanceFromTopMobile: 0,
+  distanceFromTopDesktop: 10,
+  distanceFromTopMobile: 10,
   // customFunction: closeMenu,
 };
 
@@ -81,7 +81,7 @@ function setScrollEventListeners(): void {
     "a[href*='#']"
   );
   smoothScrollLinks.forEach(function (smoothScrollLink) {
-    smoothScrollLink.addEventListener("click", smoothScroll);
+    smoothScrollLink.addEventListener("click", smoothScrollF);
   });
 
   // setting event listeners for elements with the js-scroll class
@@ -89,14 +89,29 @@ function setScrollEventListeners(): void {
     ".js-scroll"
   );
   smoothScrollElements.forEach(function (smoothScrollElement) {
-    smoothScrollElement.addEventListener("click", smoothScroll);
+    smoothScrollElement.addEventListener("click", smoothScrollF);
   });
 }
-
 setScrollEventListeners();
 
+// check for mobile device
+let isMobileDevice: boolean = false;
+function checkForMobileDevice(): void {
+  if (
+    navigator.userAgent.match(/Android/i) ||
+    navigator.userAgent.match(/webOS/i) ||
+    navigator.userAgent.match(/iPhone/i) ||
+    navigator.userAgent.match(/iPad/i) ||
+    navigator.userAgent.match(/iPod/i) ||
+    navigator.userAgent.match(/BlackBerry/i) ||
+    navigator.userAgent.match(/Windows Phone/i)
+  ) {
+    isMobileDevice = true;
+  }
+}
+
 // function for smooth scrolling
-function smoothScroll(event: MouseEvent) {
+function smoothScrollF(event: MouseEvent) {
   event.preventDefault();
   const currentTarget: HTMLElement = event.currentTarget as HTMLElement;
 
@@ -118,17 +133,6 @@ function smoothScroll(event: MouseEvent) {
     );
   }
 
-  // update url if target is an id
-  if (smoothScrollSettings.changeUrl && targetQuerySelector === "#") {
-    history.replaceState(null, "", " ");
-  } else if (
-    smoothScrollSettings.changeUrl &&
-    typeof targetQuerySelector === "string" &&
-    targetQuerySelector[0] === "#"
-  ) {
-    history.replaceState(null, "", targetQuerySelector);
-  }
-
   // the targetPosition depends on the screen width
   const screenWidth =
     window.innerWidth ||
@@ -145,7 +149,6 @@ function smoothScroll(event: MouseEvent) {
 
   // if targetQuerySelector = "#" --> scroll to top
   let targetElement: HTMLElement;
-
   let targetPosition: number;
 
   if (targetQuerySelector === "#") {
@@ -178,13 +181,14 @@ function smoothScroll(event: MouseEvent) {
     // check if user scrolled
     if (
       previousPosition &&
-      parseInt(previousPosition.toString()) != window.pageYOffset
+      parseInt(previousPosition.toString()) != window.pageYOffset &&
+      !isMobileDevice
     ) {
       abortAnimation = true;
     }
 
-    // if user didn't scroll
-    if (!abortAnimation) {
+    // if user didn't scroll or is mobile device
+    if (!abortAnimation || isMobileDevice) {
       // calculating next position
       const progress = timestamp - start;
       const t = progress / smoothScrollSettings.animationDuration;
@@ -199,6 +203,17 @@ function smoothScroll(event: MouseEvent) {
         previousPosition = null;
       }
     }
+  }
+
+  // update url if target is an id
+  if (smoothScrollSettings.changeUrl && targetQuerySelector === "#") {
+    history.replaceState(null, "", " ");
+  } else if (
+    smoothScrollSettings.changeUrl &&
+    typeof targetQuerySelector === "string" &&
+    targetQuerySelector[0] === "#"
+  ) {
+    history.replaceState(null, "", targetQuerySelector);
   }
 
   // if custom function is provided

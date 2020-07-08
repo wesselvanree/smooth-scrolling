@@ -68,6 +68,17 @@
     <!-- link smoothscroll script file -->
     <script src="./demo/js/smoothScroll.js"></script>
     <script>
+      const settings = {
+        easing: "easeOutQuint",
+        animationDuration: 600,
+        changeUrl: true,
+        navigationBreakpoint: 900,
+        distanceFromTopDesktop: 20,
+        distanceFromTopMobile: 90,
+      };
+      const smoothScroll = new SmoothScroll(settings);
+    </script>
+    <script>
       console.info(
         "Welcome, you can try editing the settings in the smoothScrollSettings object."
       );
