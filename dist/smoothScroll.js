@@ -80,8 +80,18 @@ var SmoothScroll = /** @class */ (function () {
             navigator.userAgent.match(/iPad/i) ||
             navigator.userAgent.match(/iPod/i) ||
             navigator.userAgent.match(/BlackBerry/i) ||
-            navigator.userAgent.match(/Windows Phone/i)) {
+            navigator.userAgent.match(/Windows Phone/i) ||
+            isTouchDevice()) {
             this.isMobileDevice = true;
+        }
+        function isTouchDevice() {
+            try {
+                document.createEvent("TouchEvent");
+                return true;
+            }
+            catch (e) {
+                return false;
+            }
         }
     };
     SmoothScroll.prototype.setEventListeners = function () {
