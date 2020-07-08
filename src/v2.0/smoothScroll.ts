@@ -148,7 +148,7 @@ class SmoothScroll {
     if (currentTarget.tagName == "A") {
       targetQuerySelector = currentTarget.getAttribute("href");
       if (self.settings.changeUrl) {
-        history.replaceState(null, "", targetQuerySelector);
+        window.history.replaceState(null, "", targetQuerySelector);
       }
     } else if (
       currentTarget.classList.contains("js-scroll") &&
@@ -234,13 +234,13 @@ class SmoothScroll {
 
     // update url if target is an id
     if (self.settings.changeUrl && targetQuerySelector === "#") {
-      history.replaceState(null, "", " ");
+      window.history.replaceState(null, "", " ");
     } else if (
       self.settings.changeUrl &&
       typeof targetQuerySelector === "string" &&
       targetQuerySelector[0] === "#"
     ) {
-      history.replaceState(null, "", targetQuerySelector);
+      window.history.replaceState(null, "", targetQuerySelector);
     }
 
     // if custom function is provided
@@ -259,7 +259,7 @@ class SmoothScroll {
     if (currentTarget.tagName == "A") {
       targetQuerySelector = currentTarget.getAttribute("href");
       if (self.settings.changeUrl) {
-        history.replaceState(null, "", targetQuerySelector);
+        window.history.replaceState(null, "", targetQuerySelector);
       }
     } else if (
       currentTarget.classList.contains("js-scroll") &&
