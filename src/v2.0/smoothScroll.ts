@@ -145,7 +145,7 @@ class SmoothScroll {
 
     // get the target query selector
     let targetQuerySelector: string | null = "#";
-    if (currentTarget.tagName == "A") {
+    if (currentTarget.tagName === "A") {
       targetQuerySelector = currentTarget.getAttribute("href");
       if (self.settings.changeUrl) {
         window.history.replaceState(null, "", targetQuerySelector);
@@ -208,7 +208,7 @@ class SmoothScroll {
       // check if user scrolled
       if (
         previousPosition &&
-        parseInt(previousPosition.toString()) != window.pageYOffset
+        parseInt(previousPosition.toString()) !== window.pageYOffset
       ) {
         abortAnimation = true;
       }
@@ -256,7 +256,7 @@ class SmoothScroll {
 
     // get the target query selector
     let targetQuerySelector: string | null = "#";
-    if (currentTarget.tagName == "A") {
+    if (currentTarget.tagName === "A") {
       targetQuerySelector = currentTarget.getAttribute("href");
       if (self.settings.changeUrl) {
         window.history.replaceState(null, "", targetQuerySelector);
