@@ -67,7 +67,20 @@ The following settings can be chosen, these are all optional so you don't have t
 
   - Default: `"easeOutQuint"`
   - Description: This is the easing function used in the animation. Take a look at [easings.net](https://easings.net/) to see how each function works.
-  - Options: - "linear" - "easeInCubic" - "easeOutCubic" - "easeInOutCubic" - "easeInQuad" - "easeOutQuad" - "easeInOutQuad" - "easeInQuart" - "easeOutQuart" - "easeInOutQuart" - "easeInQuint" - "easeOutQuint" - "easeInOutQuint"
+  - Options:
+    - `"linear"`
+    - `"easeInCubic"`
+    - `"easeOutCubic"`
+    - `"easeInOutCubic"`
+    - `"easeInQuad"`
+    - `"easeOutQuad"`
+    - `"easeInOutQuad"`
+    - `"easeInQuart"`
+    - `"easeOutQuart"`
+    - `"easeInOutQuart"`
+    - `"easeInQuint"`
+    - `"easeOutQuint"`
+    - `"easeInOutQuint"`
     <br>
 
 - `animationDuration`
