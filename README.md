@@ -2,13 +2,24 @@
 
 [Demo](https://wesselvanree.github.io/smooth-scrolling/)
 
-Smooth scroll to elements on a website with javascript using `window.requestAnimationFrame` ([browser support](https://caniuse.com/#feat=requestanimationframe)). Space can be added between the top of the screen and the target element.
+Smooth scroll to elements on a website with javascript using `window.requestAnimationFrame` ([browser support](https://caniuse.com/#feat=requestanimationframe)). Optimized for a top navigation but can of course also be used with a side menu.
 
+
+- [Features](#features)
 - [Installation](#installation)
 - [Getting started](#getting-started)
 - [Preferences](#preferences)
 - [Example](#example)
 - [Built With](#built-with)
+
+## Features
+- **Add space** between target elements and top of the screen.
+- Set **different amounts of this space** for your mobile and desktop navigation.
+- **Run custom function** after scrolling (e.g. close menu function)
+- Disable or enable adding the **target id** to the url
+- Multiple **easing functions** to choose from
+- Set **scroll duration**.
+- Scroll animation aborts if user scrolls during the animation.
 
 ## Installation
 
@@ -118,7 +129,7 @@ The following settings can be chosen, these are all optional so you don't have t
 
 ## Example
 
-_html_
+_index.html_
 
 ```html
 <script src="path/to/file/smoothScroll.js"></script>
@@ -133,17 +144,17 @@ function closeMenu() {
 }
 
 const settings = {
-  easing: "easeOutQuint",
-  animationDuration: 600,
-  changeUrl: true,
+  changeUrl: false,
   navigationBreakpoint: 800,
-  distanceFromTopDesktop: 60,
+  distanceFromTopDesktop: 70,
   distanceFromTopMobile: 50,
   customFunction: closeMenu,
 };
 
 const smoothScroll = new SmoothScroll(settings);
 ```
+
+When creating a SmoothScroll instance, your website instantly starts smooth scrolling.
 
 ## Built With
 
