@@ -79,8 +79,8 @@ class SmoothScroll {
         this.settings.animationDuration =
           smoothScrollSettings.animationDuration;
       }
-      if (smoothScrollSettings.changeUrl) {
-        this.settings.changeUrl = smoothScrollSettings.changeUrl;
+      if (smoothScrollSettings.changeUrl === false) {
+        this.settings.changeUrl = false;
       }
       if (smoothScrollSettings.navigationBreakpoint) {
         this.settings.navigationBreakpoint =
@@ -325,6 +325,22 @@ class SmoothScroll {
       if (progress < duration) {
         window.requestAnimationFrame(step);
       }
+    }
+
+    // update url if target is an id
+    if (self.settings.changeUrl && targetQuerySelector === "#") {
+      window.history.replaceState(null, "", " ");
+    } else if (
+      self.settings.changeUrl &&
+      typeof targetQuerySelector === "string" &&
+      targetQuerySelector[0] === "#"
+    ) {
+      window.history.replaceState(null, "", targetQuerySelector);
+    }
+
+    // if custom function is provided
+    if (self.settings.customFunction) {
+      self.settings.customFunction();
     }
   }
 }
