@@ -1,3 +1,4 @@
+"use strict";
 var SmoothScroll = /** @class */ (function () {
     function SmoothScroll(smoothScrollSettings) {
         this.isMobileDevice = false;
@@ -22,7 +23,7 @@ var SmoothScroll = /** @class */ (function () {
             easeOutQuint: function (t) { return 1 + --t * t * t * t * t; },
             easeInOutQuint: function (t) {
                 return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
-            }
+            },
         };
         this.settings = {
             timingFunction: this.easings.easeOutQuint,
@@ -30,7 +31,7 @@ var SmoothScroll = /** @class */ (function () {
             changeUrl: true,
             navigationBreakpoint: 800,
             distanceFromTopDesktop: 0,
-            distanceFromTopMobile: 0
+            distanceFromTopMobile: 0,
         };
         this.currentEvent = null;
         this.checkForMobileDevice();
@@ -43,8 +44,8 @@ var SmoothScroll = /** @class */ (function () {
                 this.settings.animationDuration =
                     smoothScrollSettings.animationDuration;
             }
-            if (smoothScrollSettings.changeUrl) {
-                this.settings.changeUrl = smoothScrollSettings.changeUrl;
+            if (smoothScrollSettings.changeUrl === false) {
+                this.settings.changeUrl = false;
             }
             if (smoothScrollSettings.navigationBreakpoint) {
                 this.settings.navigationBreakpoint =
@@ -251,6 +252,19 @@ var SmoothScroll = /** @class */ (function () {
             if (progress < duration) {
                 window.requestAnimationFrame(step);
             }
+        }
+        // update url if target is an id
+        if (self.settings.changeUrl && targetQuerySelector === "#") {
+            window.history.replaceState(null, "", " ");
+        }
+        else if (self.settings.changeUrl &&
+            typeof targetQuerySelector === "string" &&
+            targetQuerySelector[0] === "#") {
+            window.history.replaceState(null, "", targetQuerySelector);
+        }
+        // if custom function is provided
+        if (self.settings.customFunction) {
+            self.settings.customFunction();
         }
     };
     return SmoothScroll;
