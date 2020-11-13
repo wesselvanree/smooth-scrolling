@@ -19,7 +19,7 @@
       <p>
         The amount of pixels added between the target and the top of the screen
         depends on the screen width. Try clicking the same anchor with the
-        different navigations (navigation changes style at a width of 900px).
+        different navigations (navigation changes style at a width of 900px). The custom settings on this page are visible in the console.
       </p>
       <h1 id="second-heading">Header 2</h1>
       <p>
@@ -73,9 +73,16 @@
       const settings = {
         navigationBreakpoint: 900,
         distanceFromTopDesktop: 20,
-        distanceFromTopMobile: 90,
+        distanceFromTopMobile: 100,
       };
       const smoothScroll = new SmoothScroll(settings);
+
+      // console logs
+      const yellow = "color: #775B26; background-color: #FFFBE5";
+      console.log("%cCustom settings on this page:", yellow);
+      console.log(settings);
+      console.log("%cFinal settings on this page:", yellow);
+      console.log(smoothScroll.settings);
     </script>
     <script>
       console.info(
