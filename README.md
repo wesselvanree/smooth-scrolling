@@ -2,7 +2,7 @@
 
 [Demo](https://wesselvanree.github.io/smooth-scrolling/)
 
-Smooth scroll to elements on a website with javascript using `window.requestAnimationFrame` ([browser support](https://caniuse.com/#feat=requestanimationframe)). Optimized for a top navigation but can of course also be used with a side menu.
+Smooth scroll to elements on a website with javascript using `window.requestAnimationFrame` ([browser support](https://caniuse.com/#feat=requestanimationframe)).
 
 
 - [Features](#features)
