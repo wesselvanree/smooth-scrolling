@@ -23,7 +23,7 @@ Smooth scroll to elements on a website with javascript using `window.requestAnim
 
 ## Installation
 
-Download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/smooth-scrolling/master/dist/smoothScroll.js) file and add it to your project above your other javascript files.
+Download the [smoothScroll.js](https://raw.githubusercontent.com/wesselvanree/smooth-scrolling/master/dist/smoothScroll.js) file and add it to your page above the closing body tag.
 
 ```html
 <script src="path/to/file/smoothScroll.js"></script>
